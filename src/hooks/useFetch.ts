@@ -8,12 +8,6 @@ export interface IFetchPokemon {
 }
 
 const fetchPokemon = async ({ limit, offset, path, param }: IFetchPokemon) => {
-    // const url =
-    //     limit || offset
-    //         ? `${API_BASE}/${path}?limit=${limit}&offset=${offset}`
-    //         : param
-    //           ? `${API_BASE}/${path}/${param}`
-    //           : `${API_BASE}/${path}`
     let url = `${API_BASE}/${path}`
     if (param) url += `/${param}`
 
