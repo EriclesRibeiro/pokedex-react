@@ -4,4 +4,5 @@ export type Pokemon = {
     name: string
     types: PokemonType[]
     position: number
+    image: string
 }

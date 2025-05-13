@@ -32,6 +32,7 @@ const Panel = ({ limit = 10, offset = 0 }: IPanelProps) => {
                     name: detail.name,
                     position: detail.id,
                     types: detail.types,
+                    image: detail.sprites.front_default,
                 }
             }),
         ).then((results) => {
@@ -42,14 +43,19 @@ const Panel = ({ limit = 10, offset = 0 }: IPanelProps) => {
     if (isLoading) return <p>Carregando pokémons...</p>
     if (error) return <p>Erro ao carregar pokémons.</p>
 
-    return listPokemons.map((pokemon) => (
-        <Card
-            name={pokemon.name}
-            position={pokemon.position}
-            types={pokemon.types}
-            key={pokemon.position}
-        />
-    ))
+    return (
+        <div className="max-w-[900px] mx-auto flex flex-wrap justify-center gap-4 p-2">
+            {listPokemons.map((pokemon) => (
+                <Card
+                    name={pokemon.name}
+                    position={pokemon.position}
+                    types={pokemon.types}
+                    key={pokemon.position}
+                    image={pokemon.image}
+                />
+            ))}
+        </div>
+    )
 }
 
 export default Panel

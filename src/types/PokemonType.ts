@@ -5,5 +5,5 @@ export type TypeDetail = {
 
 export type PokemonType = {
     slot: number
-    detail: TypeDetail
+    type: TypeDetail
 }
