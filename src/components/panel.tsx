@@ -9,7 +9,7 @@ interface IPanelProps {
     offset?: number
 }
 
-const Panel = ({ limit = 10, offset = 0 }: IPanelProps) => {
+const Panel = ({ limit = 50, offset = 0 }: IPanelProps) => {
     const [listPokemons, setListPokemons] = useState<Pokemon[]>([])
 
     const { data, isLoading, error } = usePokemon({
@@ -44,7 +44,7 @@ const Panel = ({ limit = 10, offset = 0 }: IPanelProps) => {
     if (error) return <p>Erro ao carregar pokémons.</p>
 
     return (
-        <div className="max-w-[900px] mx-auto flex flex-wrap justify-center gap-4 p-2">
+        <div className="max-w-[1200px] mx-auto flex flex-wrap justify-center gap-4 p-2">
             {listPokemons.map((pokemon) => (
                 <Card
                     name={pokemon.name}
