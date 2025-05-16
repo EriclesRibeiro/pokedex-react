@@ -1,10 +1,11 @@
 import { POKEMON_TYPES } from '../constants'
 import type { Pokemon } from '../types/Pokemon'
+import Image from './image'
 
 const Card = ({ name, position, types, image }: Pokemon) => {
     return (
         <div className="grid w-40 h-48 gap-2 place-items-center">
-            <img
+            <Image
                 src={image}
                 alt={`Imagem de ${name}`}
                 className="h-20 w-20 object-contain"
