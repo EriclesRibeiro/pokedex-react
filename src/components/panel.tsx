@@ -3,6 +3,7 @@ import fetchPokemon from '../hooks/useFetch'
 import usePokemon from '../hooks/usePokemon'
 import type { Pokemon } from '../types/Pokemon'
 import Card from './card'
+import Detail from './detail'
 
 interface IPanelProps {
     limit?: number
@@ -11,6 +12,8 @@ interface IPanelProps {
 
 const Panel = ({ limit = 50, offset = 0 }: IPanelProps) => {
     const [listPokemons, setListPokemons] = useState<Pokemon[]>([])
+    const [pokemonSelected, setPokemonSelected] = useState<Pokemon | null>(null)
+    // const [detailsOpenned, setDetailsOpenned] = useState<boolean>(true)
 
     const { data, isLoading, error } = usePokemon({
         key: 'all-pokemons',
@@ -33,6 +36,9 @@ const Panel = ({ limit = 50, offset = 0 }: IPanelProps) => {
                     position: detail.id,
                     types: detail.types,
                     image: detail.sprites.front_default,
+                    abilities: detail.abilities,
+                    moves: detail.moves,
+                    sprites: detail.sprites,
                 }
             }),
         ).then((results) => {
@@ -40,20 +46,34 @@ const Panel = ({ limit = 50, offset = 0 }: IPanelProps) => {
         })
     }, [data])
 
+    const handleSelectPokemon = (pokemon: Pokemon) => {
+        setPokemonSelected(pokemon)
+    }
+
+    const handleCloseDetails = () => {
+        setPokemonSelected(null)
+    }
+
     if (isLoading) return <p>Carregando pokémons...</p>
     if (error) return <p>Erro ao carregar pokémons.</p>
 
     return (
-        <div className="max-w-[1200px] mx-auto flex flex-wrap justify-center gap-4 p-2">
-            {listPokemons.map((pokemon) => (
-                <Card
-                    name={pokemon.name}
-                    position={pokemon.position}
-                    types={pokemon.types}
-                    key={pokemon.position}
-                    image={pokemon.image}
+        <div className="max-w-[1600px] mx-auto p-2 relative flex flex-row">
+            <div className="flex flex-wrap justify-center gap-4 w-full">
+                {listPokemons.map((pokemon) => (
+                    <Card
+                        pokemon={pokemon}
+                        onClick={handleSelectPokemon}
+                        key={pokemon.name}
+                    />
+                ))}
+            </div>
+            {pokemonSelected && (
+                <Detail
+                    pokemon={pokemonSelected}
+                    onClose={handleCloseDetails}
                 />
-            ))}
+            )}
         </div>
     )
 }
